@@ -27,7 +27,7 @@ class Hand {
   }
 
   /**
-   * If mouse is dragged inside the object. It calls the callback
+   * If mouse is dragged inside the object. It sets the callback
    * @param {requestCallBack} trigger
    */
   mouseDragged(trigger) {
