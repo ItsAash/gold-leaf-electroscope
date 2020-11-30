@@ -1,10 +1,10 @@
-class Hand {
-  constructor(handImage) {
-    this.width = 0.45 * width;
+class Electroscope {
+  constructor(electroscopeImage) {
+    this.width = 270;
     this.height = 0;
-    this.handImage = handImage;
+    this.electroscopeImage = electroscopeImage;
 
-    this.position = createVector(1.1 * width, 250);
+    this.position = createVector(0.5 * width, 0.64 * height);
 
     this.debugMode = false;
 
@@ -14,8 +14,9 @@ class Hand {
   draw() {
     push();
     imageMode(CENTER);
-    this.handImage.resize(this.width, this.height);
-    image(this.handImage, this.position.x, this.position.y);
+    this.electroscopeImage.resize(this.width, this.height);
+    translate(this.position.x, this.position.y);
+    image(this.electroscopeImage, 0, 0);
     pop();
     if (MouseDraggedEvent.mouseIsDragged && this.contains(mouseX, mouseY)) {
       this.mouseDraggedCallback(MouseDraggedEvent.e);
@@ -46,10 +47,10 @@ class Hand {
    */
   contains(x, y) {
     if (
-      x > this.position.x - this.handImage.width / 2 &&
-      x < this.position.x + this.handImage.width / 2 &&
-      y > this.position.y - this.handImage.height / 2 &&
-      y < this.position.y + this.handImage.height / 2
+      x > this.position.x - this.electroscopeImage.width / 2 &&
+      x < this.position.x + this.electroscopeImage.width / 2 &&
+      y > this.position.y - this.electroscopeImage.height / 2 &&
+      y < this.position.y + this.electroscopeImage.height / 2
     ) {
       return true;
     } else {
@@ -68,8 +69,8 @@ class Hand {
     rect(
       this.position.x,
       this.position.y,
-      this.handImage.width,
-      this.handImage.height
+      this.electroscopeImage.width,
+      this.electroscopeImage.height
     );
     pop();
   }

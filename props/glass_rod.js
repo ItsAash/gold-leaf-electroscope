@@ -1,10 +1,10 @@
-class Hand {
-  constructor(handImage) {
-    this.width = 0.45 * width;
+class GlassRod {
+  constructor(glassImage) {
+    this.width = 200;
     this.height = 0;
-    this.handImage = handImage;
+    this.glassImage = glassImage;
 
-    this.position = createVector(1.1 * width, 250);
+    this.position = createVector(0.02 * width, 200);
 
     this.debugMode = false;
 
@@ -14,8 +14,10 @@ class Hand {
   draw() {
     push();
     imageMode(CENTER);
-    this.handImage.resize(this.width, this.height);
-    image(this.handImage, this.position.x, this.position.y);
+    this.glassImage.resize(this.width, this.height);
+    translate(this.position.x, this.position.y);
+    rotate(radians(-45));
+    image(this.glassImage, 0, 0);
     pop();
     if (MouseDraggedEvent.mouseIsDragged && this.contains(mouseX, mouseY)) {
       this.mouseDraggedCallback(MouseDraggedEvent.e);
@@ -46,10 +48,10 @@ class Hand {
    */
   contains(x, y) {
     if (
-      x > this.position.x - this.handImage.width / 2 &&
-      x < this.position.x + this.handImage.width / 2 &&
-      y > this.position.y - this.handImage.height / 2 &&
-      y < this.position.y + this.handImage.height / 2
+      x > this.position.x - this.glassImage.width / 2 &&
+      x < this.position.x + this.glassImage.width / 2 &&
+      y > this.position.y - this.glassImage.height / 2 &&
+      y < this.position.y + this.glassImage.height / 2
     ) {
       return true;
     } else {
@@ -68,8 +70,8 @@ class Hand {
     rect(
       this.position.x,
       this.position.y,
-      this.handImage.width,
-      this.handImage.height
+      this.glassImage.width,
+      this.glassImage.height
     );
     pop();
   }

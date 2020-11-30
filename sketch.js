@@ -1,7 +1,11 @@
+/**
+ * Images
+ */
 let hand_img;
 let electroscope_img;
 let neg_charge_img;
 let pos_charge_img;
+let glass_rod;
 
 let MouseDraggedEvent = {
   mouseIsDragged: false,
@@ -10,23 +14,33 @@ let MouseDraggedEvent = {
 
 // props variable
 let hand;
+let glass;
+let electroscope;
 
 function preload() {
   hand_img = loadImage("./images/electroscope_hand.png");
   electroscope_img = loadImage("./images/electroscope_img.png");
+  glass_rod = loadImage("./images/glass_rod.svg");
 }
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
+
   hand = new Hand(hand_img);
   hand.mouseDragged(handDragged);
+
+  glass = new GlassRod(glass_rod);
+  glass.mouseDragged(glassDragged);
+
+  electroscope = new Electroscope(electroscope_img);
 }
 
 function draw() {
   background("#d6d6d6");
-  // hand_img.resize(600, 0);
-  // image(hand_img, 0.7 * width, 150);
+
   hand.draw();
+  glass.draw();
+  electroscope.draw();
 
   MouseDraggedEvent.mouseIsDragged = false;
 }
