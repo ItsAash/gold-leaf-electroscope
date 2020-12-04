@@ -9,6 +9,8 @@ class GlassRod {
     this.debugMode = false;
 
     this.mouseDraggedCallback = function () {};
+
+    this.charged = "pos";
   }
 
   draw() {
@@ -22,7 +24,7 @@ class GlassRod {
     if (MouseDraggedEvent.mouseIsDragged && this.contains(mouseX, mouseY)) {
       this.mouseDraggedCallback(MouseDraggedEvent.e);
     }
-
+    this.drawCharges();
     if (this.debugMode) {
       this.drawBorders();
     }
@@ -74,5 +76,25 @@ class GlassRod {
       this.glassImage.height
     );
     pop();
+  }
+
+  drawCharges() {
+    const offSetX = 60;
+    const offSetY = 60;
+
+    const chargeImage =
+      this.charged === "pos" ? pos_charge_img : neg_charge_img;
+    chargeImage.resize(0.1 * this.width, 0);
+    for (let i = 0; i < 6; i++) {
+      push();
+      imageMode(CENTER);
+      translate(
+        this.position.x - this.width / 2 + offSetX,
+        this.position.y - this.width / 2 + offSetY
+      );
+      rotate(radians(45));
+      image(chargeImage, i * 30, 0);
+      pop();
+    }
   }
 }

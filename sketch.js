@@ -21,6 +21,8 @@ function preload() {
   hand_img = loadImage("./images/electroscope_hand.png");
   electroscope_img = loadImage("./images/electroscope_img.png");
   glass_rod = loadImage("./images/glass_rod.svg");
+  neg_charge_img = loadImage("./images/neg_charge.svg");
+  pos_charge_img = loadImage("./images/pos_charge.svg");
 }
 
 function setup() {
