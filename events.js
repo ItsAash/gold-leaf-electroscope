@@ -1,9 +1,18 @@
 function handDragged() {
+  const offSet = (45 / 1366) * width;
+  const maxLeft =
+    (electroscope.position.x +
+      electroscope.width / 2 +
+      hand.width / 2 -
+      offSet) /
+    width;
+  const maxRight = 1.1;
+
   const xDiff = mouseX - pmouseX;
-  if (hand.position.x >= 1.1 * width && xDiff > 0)
-    return (hand.position.x = 1.1 * width);
-  if (hand.position.x <= 0.805 * width && xDiff < 0)
-    return (hand.position.x = 0.805 * width);
+  if (hand.position.x >= maxRight * width && xDiff > 0)
+    return (hand.position.x = maxRight * width);
+  if (hand.position.x <= maxLeft * width && xDiff < 0)
+    return (hand.position.x = maxLeft * width);
   hand.position.add(xDiff, 0);
 }
 
@@ -15,3 +24,22 @@ function glassDragged() {
     return (glass.position.x = 0.33 * width);
   glass.position.add(xDiff, 0);
 }
+
+/*
+alias ga='git add'
+alias gc='git commit -v'
+alias gd='git diff'
+alias gst='git status'
+
+alias gco='git checkout'
+alias gcm='git checkout master'
+
+alias gb='git branch'
+# view remote branches
+alias gbr='git branch --remote'
+
+alias gup='git pull --rebase'
+alias gp='git push'
+# push a newly created local branch to origin
+alias gpsup='git push --set-upstream origin $(git_current_branch)'
+*/

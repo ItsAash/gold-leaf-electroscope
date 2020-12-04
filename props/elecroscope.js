@@ -1,10 +1,10 @@
 class Electroscope {
   constructor(electroscopeImage) {
-    this.width = 270;
+    this.width = width / 5;
     this.height = 0;
     this.electroscopeImage = electroscopeImage;
 
-    this.position = createVector(0.5 * width, 0.64 * height);
+    this.position = createVector(0.5 * width, 0.62 * height);
 
     this.debugMode = false;
 

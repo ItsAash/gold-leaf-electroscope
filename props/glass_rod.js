@@ -1,10 +1,10 @@
 class GlassRod {
   constructor(glassImage) {
-    this.width = 200;
+    this.width = width / 6;
     this.height = 0;
     this.glassImage = glassImage;
 
-    this.position = createVector(0.02 * width, 200);
+    this.position = createVector(0.02 * width, 0.3 * height);
 
     this.debugMode = false;
 

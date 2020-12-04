@@ -4,7 +4,7 @@ class Hand {
     this.height = 0;
     this.handImage = handImage;
 
-    this.position = createVector(1.1 * width, 250);
+    this.position = createVector(1.1 * width, 0.4 * height);
 
     this.debugMode = false;
 
