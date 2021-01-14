@@ -79,8 +79,8 @@ class GlassRod {
   }
 
   drawCharges() {
-    const offSetX = 60;
-    const offSetY = 60;
+    const offSetX = 60 * (width / 1366);
+    const offSetY = 60 * (width / 1366);
 
     const chargeImage =
       this.charged === "pos" ? pos_charge_img : neg_charge_img;
@@ -93,7 +93,7 @@ class GlassRod {
         this.position.y - this.width / 2 + offSetY
       );
       rotate(radians(45));
-      image(chargeImage, i * 30, 0);
+      image(chargeImage, i * 30 * (width / 1366), 0);
       pop();
     }
   }

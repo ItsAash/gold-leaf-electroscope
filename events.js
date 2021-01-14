@@ -1,5 +1,5 @@
 function handDragged() {
-  const offSet = (45 / 1366) * width;
+  const offSet = (45 / screen.width) * width;
   const maxLeft =
     (electroscope.position.x +
       electroscope.width / 2 +
