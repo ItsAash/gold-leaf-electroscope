@@ -6,7 +6,8 @@ class Electroscope {
 
     this.position = createVector(0.5 * width, 0.62 * height);
 
-    this.debugMode = true;
+    this.debugMode = false;
+    this.rod = new moveableRod(createVector(0, (width / 1366) * 100));
 
     this.mouseDraggedCallback = function () {};
   }
@@ -17,11 +18,11 @@ class Electroscope {
     this.electroscopeImage.resize(this.width, this.height);
     translate(this.position.x, this.position.y);
     image(this.electroscopeImage, 0, 0);
+    this.rod.draw();
     pop();
     if (MouseDraggedEvent.mouseIsDragged && this.contains(mouseX, mouseY)) {
       this.mouseDraggedCallback(MouseDraggedEvent.e);
     }
-
     if (this.debugMode) {
       this.drawBorders();
     }
@@ -74,4 +75,42 @@ class Electroscope {
     );
     pop();
   }
+}
+
+function moveableRod(position) {
+  this.state = 0;
+  this.initailAngle = 15; // degrees
+
+  this.height = (width / 1366) * 70;
+  this.width = (width / 1366) * 12;
+
+  const offset = [-7, 7];
+  this.leftRodCharges = [];
+  this.rightRodCharges = [];
+  // drawing rods
+  this.draw = () => {
+    // left rod
+    push();
+    rectMode(CENTER);
+    strokeWeight(0);
+    translate(position.x + offset[0], position.y - this.height / 2);
+    rotate(radians(this.state * this.initailAngle));
+    fill(70);
+    rect(0, this.height / 2, this.width, this.height);
+    fill(255);
+    ellipse(0, 0, 4, 4);
+    pop();
+
+    // right rod
+    push();
+    rectMode(CENTER);
+    strokeWeight(0);
+    translate(position.x + offset[1], position.y - this.height / 2);
+    rotate(radians(-1 * this.state * this.initailAngle));
+    fill(70);
+    rect(0, this.height / 2, this.width, this.height);
+    fill(255);
+    ellipse(0, 0, 4, 4);
+    pop();
+  };
 }

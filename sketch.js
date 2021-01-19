@@ -47,9 +47,9 @@ function draw() {
   MouseDraggedEvent.mouseIsDragged = false;
 }
 
-function mouseDragged(e) {
+const mouseDragged = (e) => {
   MouseDraggedEvent = {
     mouseIsDragged: true,
     e: e,
   };
-}
+};
