@@ -1,6 +1,6 @@
 class Electroscope {
   constructor(electroscopeImage) {
-    this.width = (width / 1366) * 273.2;
+    this.width = (273.2 / 1366) * width;
     this.height = 0;
     this.electroscopeImage = electroscopeImage;
 

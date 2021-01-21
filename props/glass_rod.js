@@ -8,9 +8,9 @@ class GlassRod {
 
     this.debugMode = false;
 
-    this.mouseDraggedCallback = function () {};
-
     this.charged = "pos";
+
+    this.mouseDraggedCallback = function () {};
   }
 
   draw() {

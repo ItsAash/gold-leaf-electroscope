@@ -43,13 +43,11 @@ function draw() {
   hand.draw();
   glass.draw();
   electroscope.draw();
-
   MouseDraggedEvent.mouseIsDragged = false;
 }
-
-const mouseDragged = (e) => {
+function mouseDragged(e) {
   MouseDraggedEvent = {
     mouseIsDragged: true,
     e: e,
   };
-};
+}
