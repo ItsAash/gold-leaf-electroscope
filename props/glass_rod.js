@@ -87,13 +87,16 @@ class GlassRod {
     chargeImage.resize(0.1 * this.width, 0);
     for (let i = 0; i < 6; i++) {
       push();
-      imageMode(CENTER);
       translate(
         this.position.x - this.width / 2 + offSetX,
         this.position.y - this.width / 2 + offSetY
       );
       rotate(radians(45));
-      image(chargeImage, i * 30 * (width / 1366), 0);
+      const charge = new Charge(
+        createVector(i * 30 * (width / 1366), 0),
+        this.charged
+      );
+      charge.draw();
       pop();
     }
   }

@@ -10,16 +10,31 @@ class Electroscope {
     this.rod = new moveableRod(createVector(0, (width / 1366) * 100));
 
     this.mouseDraggedCallback = function () {};
+
+    this.charges = [];
+    for (let i = -3; i <= 3; i++) {
+      const x = i * 20;
+      this.electroscopeImage.resize(this.width, this.height);
+      const y = -this.electroscopeImage.height / 2 + 15;
+      const value = Math.random() > 0.5 ? "pos" : "neg";
+      this.charges.push(
+        new Charge(p5.Vector.add(this.position, createVector(x, y)), value)
+      );
+    }
   }
 
   draw() {
     push();
     imageMode(CENTER);
     this.electroscopeImage.resize(this.width, this.height);
+    // 405
     translate(this.position.x, this.position.y);
     image(this.electroscopeImage, 0, 0);
     this.rod.draw();
     pop();
+
+    this.drawCharges(this.charges);
+
     if (MouseDraggedEvent.mouseIsDragged && this.contains(mouseX, mouseY)) {
       this.mouseDraggedCallback(MouseDraggedEvent.e);
     }
@@ -74,6 +89,16 @@ class Electroscope {
       this.electroscopeImage.height
     );
     pop();
+  }
+
+  drawCharges(charge) {
+    const offSetX = 60 * (width / 1366);
+    const offSetY = 60 * (width / 1366);
+
+    for (let i = 0; i < this.charges.length; i++) {
+      const charge = this.charges[i];
+      charge.draw();
+    }
   }
 }
 
