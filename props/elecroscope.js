@@ -12,13 +12,21 @@ class Electroscope {
     this.mouseDraggedCallback = function () {};
 
     this.charges = [];
-    for (let i = -3; i <= 3; i++) {
-      const x = i * 20;
+    for (let i = -5; i <= 6; i++) {
       this.electroscopeImage.resize(this.width, this.height);
-      const y = -this.electroscopeImage.height / 2 + 15;
-      const value = Math.random() > 0.5 ? "pos" : "neg";
+      const prevCharge = this.charges[this.charges.length - 1];
+      let nextCharge = "pos";
+      if (prevCharge) {
+        nextCharge = prevCharge.chargeValue === "pos" ? "neg" : "pos";
+      }
+      let yOffSet = 8;
+      if (nextCharge === "pos") {
+        yOffSet = -8;
+      }
+      const x = i * 12;
+      const y = -this.electroscopeImage.height / 2 + 17 + yOffSet;
       this.charges.push(
-        new Charge(p5.Vector.add(this.position, createVector(x, y)), value)
+        new Charge(p5.Vector.add(this.position, createVector(x, y)), nextCharge)
       );
     }
   }
@@ -78,7 +86,7 @@ class Electroscope {
     push();
     rectMode(CENTER);
     fill(0);
-    ellipse(this.position.x, this.position.y, 20, 20);
+    ellipse(this.position.x, this.position.y, 5, 5);
     noFill();
     stroke(255);
     strokeWeight(2);
@@ -92,9 +100,6 @@ class Electroscope {
   }
 
   drawCharges(charge) {
-    const offSetX = 60 * (width / 1366);
-    const offSetY = 60 * (width / 1366);
-
     for (let i = 0; i < this.charges.length; i++) {
       const charge = this.charges[i];
       charge.draw();
@@ -103,17 +108,60 @@ class Electroscope {
 }
 
 function moveableRod(position) {
-  this.state = 0;
+  this.state = 3;
   this.initailAngle = 15; // degrees
 
-  this.height = (width / 1366) * 70;
-  this.width = (width / 1366) * 12;
+  this.leftRodCharge = [];
+  this.rightRodCharge = [];
+
+  this.height = (width / 1366) * 90;
+  this.width = (width / 1366) * 16;
 
   const offset = [-7, 7];
   this.leftRodCharges = [];
   this.rightRodCharges = [];
   // drawing rods
+
+  this.initCharge = () => {
+    this.leftRodCharge = [];
+    this.rightRodCharge = [];
+    for (let i = -11; i <= 0; i++) {
+      const prevCharge = this.leftRodCharge[this.leftRodCharge.length - 1];
+      let nextCharge = "pos";
+      if (prevCharge) {
+        nextCharge = prevCharge.chargeValue === "pos" ? "neg" : "pos";
+      }
+      let xOffSet = 5;
+      if (nextCharge === "pos") {
+        xOffSet = -5;
+      }
+      const x = xOffSet;
+      const y = i * 7;
+
+      this.leftRodCharge.push(
+        // new Charge(p5.Vector.add(position, createVector(x, y)), nextCharge)
+        new Charge(
+          { x: position.x - 6 + x, y: position.y - 11 + y },
+          nextCharge
+        )
+      );
+    }
+  };
+
   this.draw = () => {
+    this.drawRods();
+
+    this.initCharge();
+    // left rod charges
+    for (let charge of this.leftRodCharge) {
+      charge.draw(this.state * this.initailAngle, {
+        x: position.x,
+        y: position.y - this.height / 2,
+      });
+    }
+  };
+
+  this.drawRods = () => {
     // left rod
     push();
     rectMode(CENTER);
@@ -138,4 +186,10 @@ function moveableRod(position) {
     ellipse(0, 0, 4, 4);
     pop();
   };
+
+  this.setState = (value) => {
+    this.state = value;
+    this.initCharge();
+  };
+  this.initCharge();
 }

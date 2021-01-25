@@ -43,6 +43,7 @@ function draw() {
   hand.draw();
   glass.draw();
   electroscope.draw();
+
   MouseDraggedEvent.mouseIsDragged = false;
 }
 function mouseDragged(e) {
