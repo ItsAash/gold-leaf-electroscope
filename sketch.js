@@ -26,7 +26,7 @@ function preload() {
 }
 
 function setup() {
-  createCanvas(windowWidth, windowHeight);
+  createCanvas(1366, 637);
 
   hand = new Hand(hand_img);
   hand.mouseDragged(handDragged);

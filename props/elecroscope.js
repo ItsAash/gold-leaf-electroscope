@@ -110,10 +110,6 @@ class Electroscope {
 function moveableRod(position) {
   this.state = 3;
   this.initailAngle = 15; // degrees
-
-  this.leftRodCharge = [];
-  this.rightRodCharge = [];
-
   this.height = (width / 1366) * 90;
   this.width = (width / 1366) * 16;
 
@@ -123,10 +119,10 @@ function moveableRod(position) {
   // drawing rods
 
   this.initCharge = () => {
-    this.leftRodCharge = [];
-    this.rightRodCharge = [];
+    this.leftRodCharges = [];
+    this.rightRodCharges = [];
     for (let i = -11; i <= 0; i++) {
-      const prevCharge = this.leftRodCharge[this.leftRodCharge.length - 1];
+      const prevCharge = this.leftRodCharges[this.leftRodCharges.length - 1];
       let nextCharge = "pos";
       if (prevCharge) {
         nextCharge = prevCharge.chargeValue === "pos" ? "neg" : "pos";
@@ -138,10 +134,17 @@ function moveableRod(position) {
       const x = xOffSet;
       const y = i * 7;
 
-      this.leftRodCharge.push(
+      this.leftRodCharges.push(
         // new Charge(p5.Vector.add(position, createVector(x, y)), nextCharge)
         new Charge(
           { x: position.x - 6 + x, y: position.y - 11 + y },
+          nextCharge
+        )
+      );
+
+      this.rightRodCharges.push(
+        new Charge(
+          { x: position.x + 6 + x, y: position.y - 11 + y },
           nextCharge
         )
       );
@@ -153,7 +156,7 @@ function moveableRod(position) {
 
     this.initCharge();
     // left rod charges
-    for (let charge of this.leftRodCharge) {
+    for (let charge of this.leftRodCharges) {
       charge.draw(this.state * this.initailAngle, {
         x: position.x,
         y: position.y - this.height / 2,
