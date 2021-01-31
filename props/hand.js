@@ -6,7 +6,7 @@ class Hand {
 
     this.position = createVector(1.1 * width, 0.4 * height);
 
-    this.debugMode = false;
+    this.debugMode = true;
 
     this.mouseDraggedCallback = function () {};
   }

@@ -44,6 +44,43 @@ function draw() {
   glass.draw();
   electroscope.draw();
 
+  if (hand.position.x <= 1087) {
+    console.log("earthed");
+  }
+
+  if (true) {
+    let leftRodCharges = electroscope.rod.leftRodCharges;
+    let rightRodCharges = electroscope.rod.rightRodCharges;
+
+    let charges = {
+      leftPositive: 0,
+      rightPositive: 0,
+      leftNegative: 0,
+      rightNegative: 0,
+    };
+    for (const c of leftRodCharges) {
+      if (c.chargeValue === "pos") {
+        charges.leftPositive++;
+      } else {
+        charges.leftNegative++;
+      }
+    }
+    for (const c of rightRodCharges) {
+      if (c.chargeValue === "pos") {
+        charges.rightPositive++;
+      } else {
+        charges.rightNegative++;
+      }
+    }
+
+    if (
+      charges.leftPositive - charges.rightNegative ===
+      charges.rightPositive - charges.leftNegative
+    ) {
+      electroscope.rod.state = map(leftRodCharges.length, 0, 8, 1, 2);
+    }
+  }
+
   MouseDraggedEvent.mouseIsDragged = false;
 }
 function mouseDragged(e) {
