@@ -13,10 +13,10 @@ class Charge {
     // this.position.add(this.velocity);
   }
 
-  draw(rotateAngle = 0, translatePoint = createVector()) {
+  draw(rotateAngle = 0.12, translatePoint = createVector()) {
     const chargeImage =
       this.chargeValue === "pos" ? pos_charge_img : neg_charge_img;
-    chargeImage.resize(0.1 * glass.width, 0);
+    chargeImage.resize(0.09700 * glass.width, 0);
     push();
     imageMode(CENTER);
     translate(translatePoint.x, translatePoint.y);
