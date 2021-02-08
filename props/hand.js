@@ -9,6 +9,8 @@ class Hand {
     this.debugMode = true;
 
     this.mouseDraggedCallback = function () {};
+
+    this.charges = [];
   }
 
   draw() {

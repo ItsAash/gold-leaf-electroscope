@@ -154,7 +154,7 @@ function moveableRod(position) {
   this.draw = () => {
     this.drawRods();
 
-    this.initCharge();
+    // this.initCharge();
     // left rod charges
     for (let charge of this.leftRodCharges) {
       charge.draw(this.state * this.initailAngle, {

@@ -12,6 +12,9 @@ let MouseDraggedEvent = {
   e: null,
 };
 
+//
+let earthing = false;
+
 // props variable
 let hand;
 let glass;
@@ -45,7 +48,7 @@ function draw() {
   electroscope.draw();
 
   if (hand.position.x <= 1087) {
-    console.log("earthed");
+    earthing = true;
   }
 
   if (true) {
@@ -72,15 +75,7 @@ function draw() {
         charges.rightNegative++;
       }
     }
-
-    if (
-      charges.leftPositive - charges.rightNegative ===
-      charges.rightPositive - charges.leftNegative
-    ) {
-      electroscope.rod.state = map(leftRodCharges.length, 0, 8, 1, 2);
-    }
   }
-
   MouseDraggedEvent.mouseIsDragged = false;
 }
 function mouseDragged(e) {
