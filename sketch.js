@@ -13,6 +13,7 @@ let MouseDraggedEvent = {
 };
 
 //
+let animating_charges = [];
 let earthing = false;
 
 // props variable
@@ -47,6 +48,12 @@ function draw() {
   glass.draw();
   electroscope.draw();
 
+  if (animating_charges.length !== 0) {
+    for (const charge of animating_charges) {
+      charge.draw();
+    }
+  }
+
   if (hand.position.x <= 1087) {
     earthing = true;
   }
@@ -76,6 +83,7 @@ function draw() {
       }
     }
   }
+
   MouseDraggedEvent.mouseIsDragged = false;
 }
 function mouseDragged(e) {

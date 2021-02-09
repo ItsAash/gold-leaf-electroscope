@@ -121,7 +121,7 @@ function moveableRod(position) {
   this.initCharge = () => {
     this.leftRodCharges = [];
     this.rightRodCharges = [];
-    for (let i = -7; i <= 0; i++) {
+    for (let i = -7; i <= -2; i++) {
       const prevCharge = this.leftRodCharges[this.leftRodCharges.length - 1];
       let nextCharge = "pos";
       if (prevCharge) {
