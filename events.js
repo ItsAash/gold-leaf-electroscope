@@ -18,10 +18,12 @@ function handDragged() {
 
 function glassDragged() {
   const xDiff = mouseX - pmouseX;
-  if (glass.position.x <= 0.02 * width && xDiff < 0)
-    return (glass.position.x = 0.02 * width);
-  if (glass.position.x >= 0.33 * width && xDiff > 0)
-    return (glass.position.x = 0.33 * width);
+  const maxLeft = 0.02;
+  const maxRight = 0.36;
+  if (glass.position.x <= maxLeft * width && xDiff < 0)
+    return (glass.position.x = maxLeft * width);
+  if (glass.position.x >= maxRight * width && xDiff > 0)
+    return (glass.position.x = maxRight * width);
   glass.position.add(xDiff, 0);
 }
 

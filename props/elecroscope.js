@@ -32,6 +32,25 @@ class Electroscope {
   }
 
   draw() {
+    const distance = dist(
+      glass.position.x,
+      glass.position.y,
+      0.5 * width,
+      0.62 * height
+    );
+    console.log(distance);
+    if (distance >= 470 && distance <= 480) {
+      if (earthing) {
+        //  earthing
+        const chargeValue = glass.charged === "pos" ? "neg" : "pos";
+        animateElectroscopeToHand(chargeValue);
+      } else {
+        // not earthing
+        const chargeValue = glass.charged === "pos" ? "neg" : "pos";
+        animateElectroscopeToRod(chargeValue);
+      }
+    }
+
     push();
     imageMode(CENTER);
     this.electroscopeImage.resize(this.width, this.height);
@@ -151,9 +170,48 @@ function moveableRod(position) {
     }
   };
 
+  this.update = () => {
+    // left rod update
+    for (let i = 0; i < this.leftRodCharges.length; i++) {
+      const charge = this.leftRodCharges[i];
+      let xOffSet = 5;
+      if (charge.chargeValue === "pos") {
+        xOffSet = -5;
+      }
+      const x = xOffSet;
+      const y = i * 11;
+
+      this.leftRodCharges[i].position = createVector(
+        position.x - 6 + x,
+        position.y - 88 + y
+      );
+    }
+
+    // right rod update
+    for (let i = 0; i < this.rightRodCharges.length; i++) {
+      const charge = this.leftRodCharges[i];
+      let xOffSet = 5;
+      if (charge.chargeValue === "pos") {
+        xOffSet = -5;
+      }
+      const x = xOffSet;
+      const y = i * 11;
+
+      this.rightRodCharges[i].position = createVector(
+        position.x + 6 + x,
+        position.y - 88 + y
+      );
+    }
+  };
+
   this.draw = () => {
     this.drawRods();
 
+    this.update();
+
+    // this.initCharge();
+    // this.initCharge();
+    // this.initCharge();
     // this.initCharge();
     // left rod charges
     for (let charge of this.leftRodCharges) {
