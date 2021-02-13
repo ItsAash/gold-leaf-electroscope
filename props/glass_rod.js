@@ -28,6 +28,45 @@ class GlassRod {
     if (this.debugMode) {
       this.drawBorders();
     }
+
+    const strength = map(
+      dist(
+        this.position.x,
+        this.position.y,
+        electroscope.position.x,
+        electroscope.position.y
+      ),
+      400,
+      200,
+      1,
+      4
+    );
+
+    const rodCharges = electroscope.rod.leftRodCharges.concat(
+      electroscope.rod.rightRodCharges
+    );
+
+    const posRodChargeCount = rodCharges.filter((a) => a.chargeValue === "pos")
+      .length;
+
+    const negRodChargeCount = rodCharges.filter((a) => a.chargeValue === "neg")
+      .length;
+
+    // console.log(posChargeCount, negChargeCount);
+
+    const posPlateChargeCount = electroscope.charges.filter(
+      (a) => a.chargeValue === "pos"
+    );
+
+    const negPlateChargeCount = electroscope.charges.fiter(
+      (a) => a.chargeValue === "neg"
+    );
+
+    if (this.charged === "pos") {
+      // positive rod case
+    } else {
+      // negative rod case
+    }
   }
 
   /**
