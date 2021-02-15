@@ -58,7 +58,7 @@ class GlassRod {
       (a) => a.chargeValue === "pos"
     );
 
-    const negPlateChargeCount = electroscope.charges.fiter(
+    const negPlateChargeCount = electroscope.charges.filter(
       (a) => a.chargeValue === "neg"
     );
 
