@@ -12,7 +12,11 @@ class Electroscope {
     this.mouseDraggedCallback = function () {};
 
     this.charges = [];
-    for (let i = -5; i <= 6; i++) {
+    this.init();
+  }
+
+  init() {
+    for (let i = 0; i < 12; i++) {
       this.electroscopeImage.resize(this.width, this.height);
       const prevCharge = this.charges[this.charges.length - 1];
       let nextCharge = "pos";
@@ -23,7 +27,8 @@ class Electroscope {
       if (nextCharge === "pos") {
         yOffSet = -8;
       }
-      const x = i * 12;
+      const xOffSet = 59;
+      const x = i * 12 - xOffSet;
       const y = -this.electroscopeImage.height / 2 + 17 + yOffSet;
       this.charges.push(
         new Charge(p5.Vector.add(this.position, createVector(x, y)), nextCharge)
@@ -31,26 +36,26 @@ class Electroscope {
     }
   }
 
-  draw() {
-    const distance = dist(
-      glass.position.x,
-      glass.position.y,
-      0.5 * width,
-      0.62 * height
-    );
-    console.log(distance);
-    if (distance >= 470 && distance <= 480) {
-      if (earthing) {
-        //  earthing
-        const chargeValue = glass.charged === "pos" ? "neg" : "pos";
-        animateElectroscopeToHand(chargeValue);
-      } else {
-        // not earthing
-        const chargeValue = glass.charged === "pos" ? "neg" : "pos";
-        animateElectroscopeToRod(chargeValue);
+  update() {
+    for (let i = 0; i < this.charges.length; i++) {
+      this.electroscopeImage.resize(this.width, this.height);
+      const prevCharge = this.charges[this.charges.length - 1];
+      let nextCharge = this.charges[i].chargeValue;
+      let yOffSet = 8;
+      if (nextCharge === "pos") {
+        yOffSet = -8;
       }
+      const xOffSet = 59;
+      const x = i * 12 - xOffSet;
+      const y = -this.electroscopeImage.height / 2 + 17 + yOffSet;
+      this.charges[i].position = p5.Vector.add(
+        this.position,
+        createVector(x, y)
+      );
     }
+  }
 
+  draw() {
     push();
     imageMode(CENTER);
     this.electroscopeImage.resize(this.width, this.height);
@@ -99,6 +104,11 @@ class Electroscope {
     } else {
       return false;
     }
+  }
+
+  pushCharge(charge) {
+    this.charges.push(charge);
+    this.update();
   }
 
   drawBorders() {
@@ -172,7 +182,7 @@ function moveableRod(position) {
 
   this.update = () => {
     // left rod update
-    for (let i = 0; i < this.leftRodCharges.length; i++) {
+    for (let i = this.leftRodCharges.length - 1; i < 0; i--) {
       const charge = this.leftRodCharges[i];
       let xOffSet = 5;
       if (charge.chargeValue === "pos") {
@@ -188,7 +198,7 @@ function moveableRod(position) {
     }
 
     // right rod update
-    for (let i = 0; i < this.rightRodCharges.length; i++) {
+    for (let i = this.rightRodCharges.length - 1; i < 0; i--) {
       const charge = this.leftRodCharges[i];
       let xOffSet = 5;
       if (charge.chargeValue === "pos") {
@@ -208,12 +218,6 @@ function moveableRod(position) {
     this.drawRods();
 
     this.update();
-
-    // this.initCharge();
-    // this.initCharge();
-    // this.initCharge();
-    // this.initCharge();
-    // left rod charges
     for (let charge of this.leftRodCharges) {
       charge.draw(this.state * this.initailAngle, {
         x: position.x,

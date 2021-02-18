@@ -62,10 +62,39 @@ class GlassRod {
       (a) => a.chargeValue === "neg"
     );
 
-    if (this.charged === "pos") {
-      // positive rod case
-    } else {
-      // negative rod case
+    console.log(strength);
+    if (floor(strength) === 1) {
+      if (this.charged === "pos") {
+        // positive rod case
+        if (charge1 === undefined) {
+          charge1 =
+            rodCharges.length / 2 === floor(rodCharges.length / 2)
+              ? electroscope.rod.leftRodCharges.find(
+                  (e) => e.chargeValue === "neg"
+                )
+              : electroscope.rod.rightRodCharges[0];
+          animateRodToElectroscope("neg", () => {
+            if (rodCharges.length / 2 === floor(rodCharges.length / 2)) {
+              const index = electroscope.rod.leftRodCharges.indexOf(charge1);
+              electroscope.rod.leftRodCharges.splice(index, 1);
+            } else {
+              const index = electroscope.rod.rightRodCharges.indexOf(charge1);
+              electroscope.rod.rightRodCharges.splice(index, 1);
+            }
+            electroscope.pushCharge(charge1);
+          });
+        }
+      } else {
+        // negative rod case
+      }
+    }
+
+    if (floor(strength) === 2) {
+      if (this.charged === "pos") {
+        // positive rod case
+      } else {
+        // negative rod case
+      }
     }
   }
 

@@ -21,6 +21,10 @@ let hand;
 let glass;
 let electroscope;
 
+//
+let charge1;
+let charge2;
+
 function preload() {
   hand_img = loadImage("./images/electroscope_hand.png");
   electroscope_img = loadImage("./images/electroscope_img.png");
