@@ -62,17 +62,18 @@ class GlassRod {
       (a) => a.chargeValue === "neg"
     );
 
-    console.log(strength);
     if (floor(strength) === 1) {
-      if (this.charged === "pos") {
-        // positive rod case
+      if (this.charged === "pos" && !earthing) {
+        // positive rod case and no earthing
         if (charge1 === undefined) {
           charge1 =
             rodCharges.length / 2 === floor(rodCharges.length / 2)
               ? electroscope.rod.leftRodCharges.find(
                   (e) => e.chargeValue === "neg"
                 )
-              : electroscope.rod.rightRodCharges[0];
+              : electroscope.rod.rightRodCharges.find(
+                  (e) => e.chargeValue === "neg"
+                );
           animateRodToElectroscope("neg", () => {
             if (rodCharges.length / 2 === floor(rodCharges.length / 2)) {
               const index = electroscope.rod.leftRodCharges.indexOf(charge1);
@@ -84,18 +85,79 @@ class GlassRod {
             electroscope.pushCharge(charge1);
           });
         }
-      } else {
-        // negative rod case
+      } else if (this.charged === "neg" && !earthing) {
+        // negative rod case and no earthing
+        if (charge1 === undefined) {
+          charge1 = electroscope.charges.find((e) => e.chargeValue === "neg");
+          animateElectroscopeToRod("neg", () => {
+            const index = electroscope.charges.indexOf(charge1);
+            electroscope.charges.splice(index, 1);
+            if (rodCharges.length / 2 === floor(rodCharges.length / 2)) {
+              electroscope.rod.leftRodCharges.push(charge1);
+            } else {
+              electroscope.rod.rightRodCharges.push(charge1);
+            }
+          });
+        }
+      } else if (this.charged === "pos" && earthing) {
+        // positive charge earthing
+      } else if (this.charge === "neg" && earthing) {
       }
     }
 
     if (floor(strength) === 2) {
-      if (this.charged === "pos") {
-        // positive rod case
-      } else {
-        // negative rod case
+      if (this.charged === "pos" && !earthing) {
+        // positive rod case and no earthing
+        if (charge2 === undefined) {
+          charge2 =
+            rodCharges.length / 2 === floor(rodCharges.length / 2)
+              ? electroscope.rod.leftRodCharges.find(
+                  (e) => e.chargeValue === "neg"
+                )
+              : electroscope.rod.rightRodCharges.find(
+                  (e) => e.chargeValue === "neg"
+                );
+          animateRodToElectroscope("neg", () => {
+            if (rodCharges.length / 2 === floor(rodCharges.length / 2)) {
+              const index = electroscope.rod.leftRodCharges.indexOf(charge2);
+              electroscope.rod.leftRodCharges.splice(index, 1);
+            } else {
+              const index = electroscope.rod.rightRodCharges.indexOf(charge2);
+              electroscope.rod.rightRodCharges.splice(index, 1);
+            }
+            electroscope.pushCharge(charge2);
+          });
+        }
+      } else if (this.charged === "neg" && !earthing) {
+        // negative rod case and no earthing
+        if (charge2 === undefined) {
+          charge2 = electroscope.charges.find((e) => e.chargeValue === "neg");
+          animateElectroscopeToRod("neg", () => {
+            const index = electroscope.charges.indexOf(charge2);
+            electroscope.charges.splice(index, 1);
+            if (rodCharges.length / 2 === floor(rodCharges.length / 2)) {
+              electroscope.rod.leftRodCharges.push(charge2);
+            } else {
+              electroscope.rod.rightRodCharges.push(charge2);
+            }
+          });
+        }
+      } else if (this.charged === "pos" && earthing) {
+        // positive charge earthing
+      } else if (this.charge === "neg" && earthing) {
+        // negative charge earthing
       }
     }
+
+    // movable check
+    const m_strength = map(
+      Math.abs(posRodChargeCount - negRodChargeCount),
+      0,
+      4,
+      0,
+      5
+    );
+    electroscope.rod.state = m_strength;
   }
 
   /**

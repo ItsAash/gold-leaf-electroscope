@@ -51,7 +51,6 @@ function draw() {
   background("#d6d6d6");
 
   if (mouseIsPressed) {
-    console.log(mouseX, mouseY);
   }
 
   hand.draw();

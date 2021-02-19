@@ -45,7 +45,7 @@ class Electroscope {
       if (nextCharge === "pos") {
         yOffSet = -8;
       }
-      const xOffSet = 59;
+      const xOffSet = 60;
       const x = i * 12 - xOffSet;
       const y = -this.electroscopeImage.height / 2 + 17 + yOffSet;
       this.charges[i].position = p5.Vector.add(
