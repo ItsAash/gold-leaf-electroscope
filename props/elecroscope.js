@@ -16,7 +16,7 @@ class Electroscope {
   }
 
   init() {
-    for (let i = 0; i < 12; i++) {
+    for (let i = 0; i < 6; i++) {
       this.electroscopeImage.resize(this.width, this.height);
       const prevCharge = this.charges[this.charges.length - 1];
       let nextCharge = "pos";
@@ -27,7 +27,7 @@ class Electroscope {
       if (nextCharge === "pos") {
         yOffSet = -8;
       }
-      const xOffSet = 59;
+      const xOffSet = 35;
       const x = i * 12 - xOffSet;
       const y = -this.electroscopeImage.height / 2 + 17 + yOffSet;
       this.charges.push(
@@ -39,13 +39,12 @@ class Electroscope {
   update() {
     for (let i = 0; i < this.charges.length; i++) {
       this.electroscopeImage.resize(this.width, this.height);
-      const prevCharge = this.charges[this.charges.length - 1];
       let nextCharge = this.charges[i].chargeValue;
       let yOffSet = 8;
       if (nextCharge === "pos") {
         yOffSet = -8;
       }
-      const xOffSet = 60;
+      const xOffSet = 35;
       const x = i * 12 - xOffSet;
       const y = -this.electroscopeImage.height / 2 + 17 + yOffSet;
       this.charges[i].position = p5.Vector.add(

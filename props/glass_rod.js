@@ -69,11 +69,12 @@ class GlassRod {
           charge1 =
             rodCharges.length / 2 === floor(rodCharges.length / 2)
               ? electroscope.rod.leftRodCharges.find(
-                  (e) => e.chargeValue === "neg"
+                  (e) => e.chargeValue === "neg" && !e.moving
                 )
               : electroscope.rod.rightRodCharges.find(
-                  (e) => e.chargeValue === "neg"
+                  (e) => e.chargeValue === "neg" && !e.moving
                 );
+          charge1.moving = true;
           animateRodToElectroscope("neg", () => {
             if (rodCharges.length / 2 === floor(rodCharges.length / 2)) {
               const index = electroscope.rod.leftRodCharges.indexOf(charge1);
@@ -83,12 +84,17 @@ class GlassRod {
               electroscope.rod.rightRodCharges.splice(index, 1);
             }
             electroscope.pushCharge(charge1);
+            charge1.moving = false;
+            charge1 = undefined;
           });
         }
       } else if (this.charged === "neg" && !earthing) {
         // negative rod case and no earthing
         if (charge1 === undefined) {
-          charge1 = electroscope.charges.find((e) => e.chargeValue === "neg");
+          charge1 = electroscope.charges.find(
+            (e) => e.chargeValue === "neg" && !e.moving
+          );
+          charge1.moving = true;
           animateElectroscopeToRod("neg", () => {
             const index = electroscope.charges.indexOf(charge1);
             electroscope.charges.splice(index, 1);
@@ -97,11 +103,44 @@ class GlassRod {
             } else {
               electroscope.rod.rightRodCharges.push(charge1);
             }
+            charge1.moving = false;
+            charge1 = undefined;
           });
         }
       } else if (this.charged === "pos" && earthing) {
         // positive charge earthing
-      } else if (this.charge === "neg" && earthing) {
+        if (charge1 === undefined) {
+          charge1 = new Charge(
+            p5.Vector.add(
+              electroscope.position,
+              createVector(
+                1000,
+                -electroscope.electroscopeImage.height / 2 + 17
+              )
+            ),
+            "neg"
+          );
+          charge1.moving = true;
+          animateHandToElectroscope("neg", () => {
+            electroscope.pushCharge(charge1);
+            charge1.moving = false;
+            charge1 = undefined;
+          });
+        }
+      } else if (this.charged === "neg" && earthing) {
+        // negative charge earthing
+        if (charge1 === undefined) {
+          charge1 = electroscope.charges.find(
+            (e) => e.chargeValue === "neg" && !e.moving
+          );
+          charge1.moving = true;
+          animateElectroscopeToHand("neg", () => {
+            const index = electroscope.charges.indexOf(charge1);
+            electroscope.charges.splice(index, 1);
+          });
+          charge1.moving = false;
+          charge1 = undefined;
+        }
       }
     }
 
@@ -112,11 +151,12 @@ class GlassRod {
           charge2 =
             rodCharges.length / 2 === floor(rodCharges.length / 2)
               ? electroscope.rod.leftRodCharges.find(
-                  (e) => e.chargeValue === "neg"
+                  (e) => e.chargeValue === "neg" && !e.moving
                 )
               : electroscope.rod.rightRodCharges.find(
-                  (e) => e.chargeValue === "neg"
+                  (e) => e.chargeValue === "neg" && !e.moving
                 );
+          charge2.moving = true;
           animateRodToElectroscope("neg", () => {
             if (rodCharges.length / 2 === floor(rodCharges.length / 2)) {
               const index = electroscope.rod.leftRodCharges.indexOf(charge2);
@@ -126,12 +166,16 @@ class GlassRod {
               electroscope.rod.rightRodCharges.splice(index, 1);
             }
             electroscope.pushCharge(charge2);
+            charge2.moving = false;
+            charge2 = undefined;
           });
         }
       } else if (this.charged === "neg" && !earthing) {
         // negative rod case and no earthing
         if (charge2 === undefined) {
-          charge2 = electroscope.charges.find((e) => e.chargeValue === "neg");
+          charge2 = electroscope.charges.find(
+            (e) => e.chargeValue === "neg" && !e.moving
+          );
           animateElectroscopeToRod("neg", () => {
             const index = electroscope.charges.indexOf(charge2);
             electroscope.charges.splice(index, 1);
@@ -140,12 +184,44 @@ class GlassRod {
             } else {
               electroscope.rod.rightRodCharges.push(charge2);
             }
+            charge2.moving = false;
+            charge2 = undefined;
           });
         }
       } else if (this.charged === "pos" && earthing) {
         // positive charge earthing
-      } else if (this.charge === "neg" && earthing) {
+        if (charge2 === undefined) {
+          charge2 = new Charge(
+            p5.Vector.add(
+              electroscope.position,
+              createVector(
+                1000,
+                -electroscope.electroscopeImage.height / 2 + 17
+              )
+            ),
+            "neg"
+          );
+          charge2.moving = true;
+          animateHandToElectroscope("neg", () => {
+            electroscope.pushCharge(charge2);
+            charge2.moving = false;
+            charge2 = undefined;
+          });
+        }
+      } else if (this.charged === "neg" && earthing) {
         // negative charge earthing
+        if (charge2 === undefined) {
+          charge2 = electroscope.charges.find(
+            (e) => e.chargeValue === "neg" && !e.mouseDragged
+          );
+          charge2.moving = true;
+          animateElectroscopeToHand("neg", () => {
+            const index = electroscope.charges.indexOf(charge2);
+            electroscope.charges.splice(index, 1);
+            charge2.moving = false;
+            charge2 = undefined;
+          });
+        }
       }
     }
 

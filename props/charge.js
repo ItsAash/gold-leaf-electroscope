@@ -73,15 +73,15 @@ class Charge {
    * @param {Object} distance  Distance charge need to move {x, y}.
    * @param {Function} callback Callback function after reaching the point.
    */
-  move(distance, callback) {
+  move(distance, callback, vel = 10) {
     if (this.moving) return;
     this.moveCheckValue = {
       cb: callback,
       distance: distance,
     };
     this.velocity = createVector(
-      (distance.x / Math.abs(distance.x)) * 10,
-      (distance.y / Math.abs(distance.y)) * 10
+      (distance.x / Math.abs(distance.x)) * vel,
+      (distance.y / Math.abs(distance.y)) * vel
     );
     this.moving = true;
     this.prev = this.position.copy();
@@ -127,10 +127,14 @@ function animateElectroscopeToHand(
     chargeValue
   );
   animating_charges.push(charge);
-  charge.move(createVector(0.5 * width, 0), () => {
-    animating_charges.splice(animating_charges.indexOf(charge, 1));
-    callback();
-  });
+  charge.move(
+    createVector(0.5 * width, 0),
+    () => {
+      animating_charges.splice(animating_charges.indexOf(charge, 1));
+      callback();
+    },
+    30
+  );
 }
 
 function animateHandToElectroscope(
@@ -139,8 +143,12 @@ function animateHandToElectroscope(
 ) {
   const charge = new Charge(createVector(width, 0.33 * height), chargeValue);
   animating_charges.push(charge);
-  charge.move(createVector(-0.5 * width, 0), () => {
-    animating_charges.splice(animating_charges.indexOf(charge, 1));
-    callback();
-  });
+  charge.move(
+    createVector(-0.5 * width, 0),
+    () => {
+      animating_charges.splice(animating_charges.indexOf(charge, 1));
+      callback();
+    },
+    30
+  );
 }
